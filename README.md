@@ -16,10 +16,12 @@ Streams BMW CarData MQTT events into a PostgreSQL table. Minimal, single-script 
 
 ## Requirements
 
-* Linux, Bash
-* `jq`, `mqtt-sub`, `stdin2sql.php`
-* `/opt/amp-bash-commons/shell-util.sh` available
+* `jq`
+* [mqtt-sub](https://github.com/SIGSEGV111/mqtt-sub)
+* [stdin2sql.php](https://github.com/SIGSEGV111/stdin2sql)
+* `/opt/amp-bash-commons/shell-util.sh` available (or remove `parseCommandlineArguments` and `parseCommandlineArguments`)
 * PostgreSQL reachable by `stdin2sql.php` (auth as configured there)
+* Optional, but recommended: [bmw-token-manager](https://github.com/SIGSEGV111/bmw-token-manager)
 
 ## PostgreSQL table
 
