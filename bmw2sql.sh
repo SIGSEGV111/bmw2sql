@@ -28,5 +28,5 @@ for ((;;)); do
 		--topic "$gcid/$vin" \
 		--debug \
 		| jq -c '.data' \
-		| stdin2sql.php --sql "INSERT INTO $__table ($__payload) VALUES (\$1::JSONB) RETURNING $__id"
+		| stdin2sql.php --sql "INSERT INTO $__table ($__payload) VALUES (\$1::JSONB) RETURNING $__id" -x "application_name=bmw2sql"
 done
