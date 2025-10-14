@@ -3,7 +3,7 @@ source "/opt/amp-bash-commons/shell-util.sh"
 
 my_path="$(dirname "$(readlink -f "$0")")"
 ensureProgramsInstalled jq mqtt-sub stdin2sql.php
-parseCommandlineArguments "t:token-file=file" "b:table:BMW_TABLE=string?bmw_mqtt" "p:payload:BMW_PAYLOAD_COLUMN=string?payload" "i:id:BMW_ID_COLUMN=string?id" -- "$@"
+parseCommandlineArguments "t:token-file:BMW_TOKEN_FILE=file" "b:table:BMW_TABLE=string?bmw_mqtt" "p:payload:BMW_PAYLOAD_COLUMN=string?payload" "i:id:BMW_ID_COLUMN=string?id" -- "$@"
 
 function getJsonValue()
 {

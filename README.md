@@ -66,7 +66,7 @@ Short forms:
 
 You can also set env vars instead of flags:
 
-* `BMW_TABLE`, `BMW_PAYLOAD_COLUMN`, `BMW_ID_COLUMN`
+* `BMW_TOKEN_FILE`, `BMW_TABLE`, `BMW_PAYLOAD_COLUMN`, `BMW_ID_COLUMN`
 
 ## Notes
 
