@@ -6,8 +6,8 @@ License:        GPLv3
 URL:            https://www.brennecke-it.net
 BuildArch:      noarch
 BuildRequires:  go-md2man easy-rpm
-Requires:       amp-bash-commons stdin2sql krenewd
-Recommends:     bmw-token-manager
+Requires:       amp-bash-commons stdin2sql
+Recommends:     bmw-token-manager krenewd
 
 %description
 Streams BMW CarData MQTT events into a PostgreSQL table.

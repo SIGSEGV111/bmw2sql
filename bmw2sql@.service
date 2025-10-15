@@ -2,7 +2,7 @@
 Description=BMW CarData → PostgreSQL streamer
 Documentation=https://github.com/SIGSEGV111/bmw2sql
 After=network-online.target krenewd@%i.service
-Requires=network-online.target krenewd@%i.service
+Requires=network-online.target
 StartLimitIntervalSec=0
 StartLimitBurst=2147483647
 
