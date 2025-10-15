@@ -5,6 +5,8 @@ my_path="$(dirname "$(readlink -f "$0")")"
 ensureProgramsInstalled jq mqtt-sub stdin2sql.php
 parseCommandlineArguments "t:token-file:BMW_TOKEN_FILE=file" "b:table:BMW_TABLE=string?bmw_mqtt" "p:payload:BMW_PAYLOAD_COLUMN=string?payload" "i:id:BMW_ID_COLUMN=string?id" -- "$@"
 
+export PGAPPNAME="${PGAPPNAME:-bmw2sql}"
+
 function getJsonValue()
 {
 	jq -r "$1" <<<"$json"
@@ -28,5 +30,5 @@ for ((;;)); do
 		--topic "$gcid/$vin" \
 		--debug \
 		| jq -c '.data' \
-		| stdin2sql.php --sql "INSERT INTO $__table ($__payload) VALUES (\$1::JSONB) RETURNING $__id" -x "application_name=bmw2sql"
+		| stdin2sql.php --sql "INSERT INTO $__table ($__payload) VALUES (\$1::JSONB) RETURNING $__id"
 done

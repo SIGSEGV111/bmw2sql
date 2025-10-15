@@ -26,14 +26,16 @@ bmw2sql.1: README.md Makefile
 	go-md2man < README.md > bmw2sql.1
 
 install: bmw2sql.1 bmw2sql.sh Makefile
-	mkdir -p "$(BINDIR)" "$(MANDIR)/man1"
+	mkdir -p "$(BINDIR)" "$(MANDIR)/man1" "$(CONFDIR)" "$(UNITDIR)"
 	install -m 755 bmw2sql.sh "$(BINDIR)/"
 	install -m 644 bmw2sql.1 "$(MANDIR)/man1/"
+	install -m 644 bmw2sql.conf "$(CONFDIR)/"
+	install -m 644 bmw2sql@.service "$(UNITDIR)/"
 
 deploy: $(ARCH_RPM_NAME)
 	ensure-git-clean.sh
 	deploy-rpm.sh --infile=bmw2sql.src.rpm --outdir="$(RPMDIR)" --keyid="$(KEYID)" --srpm
 	deploy-rpm.sh --infile="$(ARCH_RPM_NAME)" --outdir="$(RPMDIR)" --keyid="$(KEYID)"
 
-$(ARCH_RPM_NAME) bmw2sql.src.rpm: Makefile bmw2sql.spec README.md LICENSE.md bmw2sql.sh
+$(ARCH_RPM_NAME) bmw2sql.src.rpm: Makefile bmw2sql.spec README.md LICENSE.md bmw2sql.sh bmw2sql.conf bmw2sql@.service
 	easy-rpm.sh --name bmw2sql --outdir . --plain --arch "$(ARCH)" -- $^

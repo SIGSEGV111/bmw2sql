@@ -1,0 +1,25 @@
+[Unit]
+Description=BMW CarData → PostgreSQL streamer
+Documentation=https://github.com/SIGSEGV111/bmw2sql
+After=network-online.target krenewd@%i.service
+Requires=network-online.target krenewd@%i.service
+StartLimitIntervalSec=0
+StartLimitBurst=2147483647
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/usr/bin/bmw2sql.sh
+EnvironmentFile=-/etc/bmw2sql.conf
+EnvironmentFile=-%h/bmw2sql.conf
+Restart=always
+RestartSec=15
+WorkingDirectory=%h
+UMask=0077
+
+# Security
+PrivateTmp=false
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

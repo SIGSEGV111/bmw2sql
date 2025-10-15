@@ -17,11 +17,11 @@ Streams BMW CarData MQTT events into a PostgreSQL table. Minimal, single-script 
 ## Requirements
 
 * `jq`
+* PostgreSQL server
 * [mqtt-sub](https://github.com/SIGSEGV111/mqtt-sub)
 * [stdin2sql.php](https://github.com/SIGSEGV111/stdin2sql)
-* `/opt/amp-bash-commons/shell-util.sh` available (or remove `parseCommandlineArguments` and `parseCommandlineArguments`)
-* PostgreSQL reachable by `stdin2sql.php` (auth as configured there)
-* Optional, but recommended: [bmw-token-manager](https://github.com/SIGSEGV111/bmw-token-manager)
+* [bmw-token-manager](https://github.com/SIGSEGV111/bmw-token-manager)
+* OPTIONAL: `/opt/amp-bash-commons/shell-util.sh` (or remove `parseCommandlineArguments` and `parseCommandlineArguments`)
 
 ## PostgreSQL table
 
@@ -37,15 +37,39 @@ CREATE TABLE bmw_mqtt (
 
 ## Token file
 
-Path given with `-t/--token-file`. Expected JSON keys:
+Path given with `-t/--token-file`.
+
+### Canonical JSON example
 
 ```json
 {
-  "id_token": "JWT or opaque token",
-  "gcid": "client-id",
-  "vin": "WBA..."
+  "gcid": "XXXXXXXXXXXXXXXXXXXXXX",
+  "token_type": "Bearer",
+  "access_token": "XXXXXXXXXXXXXXXXXXXXXX",
+  "refresh_token": "XXXXXXXXXXXXXXXXXXXXXX",
+  "scope": "openid cardata:streaming:read authenticate_user",
+  "expires_in": 3599,
+  "id_token": "XXXXXXXXXXXXXXXXXXXXXX",
+  "fetched_at": 1234567890,
+  "expires_at": 1234567890,
+  "client_id": "XXXXXXXXXXXXXXXXXXXXXX",
+  "vin": "XXXXXXXXXXXXXXXXXXXXXX"
 }
 ```
+
+### Field reference
+
+* **gcid**: BMW Group Customer ID used as MQTT username.
+* **token_type**: Usually `"Bearer"`.
+* **access_token**: Short-lived OAuth access token.
+* **refresh_token**: Long-lived token used to obtain new `id_token`.
+* **scope**: Granted scopes string. Must contain `cardata:streaming:read`.
+* **expires_in**: Seconds until expiry as returned by the last token endpoint call.
+* **id_token**: Used as MQTT password.
+* **fetched_at**: Unix epoch when the last refresh was fetched.
+* **expires_at**: Absolute Unix epoch expiry time.
+* **client_id**: OAuth client ID used for refresh.
+* **vin**: Vehicle identifier.
 
 ## Usage
 
@@ -67,6 +91,7 @@ Short forms:
 You can also set env vars instead of flags:
 
 * `BMW_TOKEN_FILE`, `BMW_TABLE`, `BMW_PAYLOAD_COLUMN`, `BMW_ID_COLUMN`
+* All libpq environment variables are also honored (`PGUSER`, `PGDATABASE`, ...)
 
 ## Notes
 
