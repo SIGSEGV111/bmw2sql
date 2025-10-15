@@ -6,7 +6,7 @@ License:        GPLv3
 URL:            https://www.brennecke-it.net
 BuildArch:      noarch
 BuildRequires:  go-md2man easy-rpm
-Requires:       amp-bash-commons stdin2sql
+Requires:       amp-bash-commons stdin2sql mqtt-sub jq coreutils
 Recommends:     bmw-token-manager krenewd
 
 %description

@@ -11,10 +11,9 @@ Type=simple
 User=%i
 ExecStart=/usr/bin/bmw2sql.sh
 EnvironmentFile=-/etc/bmw2sql.conf
-EnvironmentFile=-%h/bmw2sql.conf
 Restart=always
 RestartSec=15
-WorkingDirectory=%h
+WorkingDirectory=~
 UMask=0077
 
 # Security
